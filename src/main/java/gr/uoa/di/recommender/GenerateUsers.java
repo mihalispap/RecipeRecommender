@@ -23,8 +23,33 @@ public class GenerateUsers {
         ObjectMapper objectMapper = new ObjectMapper();
 
         new File(args[0]).mkdirs();
+        String jsonResult;
 
-        for(int i=0;i<Integer.valueOf(args[1]);i++){
+        User konstantina = new User();
+        konstantina.setPassword("test");
+        konstantina.setFirstName("Konstantina");
+        konstantina.setLastName("Stamoulou");
+        konstantina.setEmail("konstantina@foodie.com");
+        konstantina.setUserId((long)0);
+
+        Files.write(Paths.get(args[0]+"/user_0"
+                        +".json"), objectMapper.writerWithDefaultPrettyPrinter()
+                        .writeValueAsString(konstantina).getBytes(),
+                StandardOpenOption.CREATE);
+
+        User mihalis = new User();
+        mihalis.setPassword("test");
+        mihalis.setFirstName("Mihalis");
+        mihalis.setLastName("Papakonstantinou");
+        mihalis.setEmail("mihalis@foodie.com");
+        mihalis.setUserId((long)1);
+
+        Files.write(Paths.get(args[0]+"/user_1"
+                        +".json"), objectMapper.writerWithDefaultPrettyPrinter()
+                        .writeValueAsString(mihalis).getBytes(),
+                StandardOpenOption.CREATE);
+
+        for(int i=2;i<Integer.valueOf(args[1]);i++){
             User user = new User();
 
             user.setUserId((long) i);
@@ -33,7 +58,7 @@ public class GenerateUsers {
             user.setEmail(user.getFirstName().toLowerCase()+"@email.com");
             user.setPassword("test");
 
-            String jsonResult = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
+            jsonResult = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
             Files.write(Paths.get(args[0]+"/user_"+i
                             +".json"), jsonResult.getBytes(),
                     StandardOpenOption.CREATE);
